@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PräventionsHub - Partner werden</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --text: #0f172a;
+            --text-light: #64748b;
+            --bg: #ffffff;
+            --bg-light: #f8fafc;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--bg-light);
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            opacity: 0.03;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float1 20s ease-in-out infinite;
+        }
+
+        .bg-animation::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float2 25s ease-in-out infinite;
+        }
+
+        @keyframes float1 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(100px, 100px); }
+        }
+
+        @keyframes float2 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-100px, -100px); }
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .btn {
+            padding: 0.875rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            font-size: 1rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            max-width: 1400px;
+            margin: 4rem auto;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+            padding: 0.5rem 1.25rem;
+            border-radius: 100px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--text) 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: var(--text-light);
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            line-height: 1.6;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        /* Section */
+        section {
+            max-width: 1400px;
+            margin: 6rem auto;
+            padding: 0 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .section-header p {
+            font-size: 1.25rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Benefits Grid */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .benefit-card {
+            background: white;
+            padding: 3rem;
+            border-radius: 24px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+            border-color: var(--primary);
+        }
+
+        .benefit-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
+        }
+
+        .benefit-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .benefit-card p {
+            color: var(--text-light);
+            line-height: 1.7;
+            font-size: 1.0625rem;
+        }
+
+        /* Process Timeline */
+        .process-timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 4rem auto;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            align-items: start;
+        }
+
+        .timeline-number {
+            flex-shrink: 0;
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 800;
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
+        }
+
+        .timeline-content {
+            flex: 1;
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .timeline-content h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+        }
+
+        .timeline-content p {
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* ROI Calculator */
+        .calculator {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: 4rem;
+            border-radius: 32px;
+            color: white;
+            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.4);
+        }
+
+        .calculator h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .calculator-subtitle {
+            text-align: center;
+            opacity: 0.9;
+            margin-bottom: 3rem;
+            font-size: 1.125rem;
+        }
+
+        .calculator-input {
+            max-width: 600px;
+            margin: 0 auto 3rem;
+        }
+
+        .calculator-input label {
+            display: block;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            font-size: 1.125rem;
+        }
+
+        .slider-container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.3);
+            outline: none;
+            -webkit-appearance: none;
+            margin-bottom: 1rem;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: white;
+            cursor: grab;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        input[type="range"]::-webkit-slider-thumb:active {
+            cursor: grabbing;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: white;
+            cursor: grab;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            border: none;
+            transition: all 0.2s;
+        }
+
+        input[type="range"]::-moz-range-thumb:hover {
+            transform: scale(1.15);
+        }
+
+        .slider-value {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .slider-label {
+            text-align: center;
+            opacity: 0.9;
+        }
+
+        .calculator-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .result-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .result-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-label {
+            opacity: 0.9;
+            font-size: 0.9375rem;
+        }
+
+        /* Course Grid */
+        .course-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .category-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 24px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+        }
+
+        .category-icon-large {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .category-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .course-count {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 1.125rem;
+            margin-bottom: 1rem;
+        }
+
+        .course-list {
+            list-style: none;
+            color: var(--text-light);
+            font-size: 0.9375rem;
+        }
+
+        .course-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .course-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 6rem 2rem;
+            border-radius: 32px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section h2 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+        }
+
+        .cta-section p {
+            font-size: 1.25rem;
+            margin-bottom: 3rem;
+            opacity: 0.95;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-white {
+            background: white;
+            color: var(--primary);
+            padding: 1.25rem 3rem;
+            font-size: 1.125rem;
+        }
+
+        .btn-white:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text);
+            color: white;
+            padding: 3rem 2rem 2rem;
+            margin-top: 6rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-content p {
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.125rem;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+            }
+
+            .benefits-grid,
+            .course-categories {
+                grid-template-columns: 1fr;
+            }
+
+            .calculator {
+                padding: 2rem;
+            }
+
+            .cta-section h2 {
+                font-size: 2rem;
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .slide-up {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideUp 0.8s ease-out forwards;
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">💚</div>
+                <span>PräventionsHub</span>
+            </div>
+            <button class="btn btn-primary" onclick="scrollToCTA()">
+                Jetzt Partner werden →
+            </button>
+        </div>
+    </header>
+
+    <section class="hero fade-in">
+        <div class="hero-badge">🚀 Für Ärzte & Praxen</div>
+        <h1>Verdienen Sie 2.700€+ pro Monat<br>mit digitaler Prävention</h1>
+        <p>White-Label-Plattform mit 32 ZPP-zertifizierten Online-Kursen. Null Aufwand für Sie. Ihre Patienten profitieren. Ihre Praxis verdient.</p>
+        <div class="hero-cta">
+            <button class="btn btn-primary" onclick="scrollToCalculator()">
+                💰 Ihr Potential berechnen
+            </button>
+        </div>
+    </section>
+
+    <div class="stats-grid slide-up">
+        <div class="stat-card">
+            <span class="stat-number">0€</span>
+            <span class="stat-label">Investitionskosten</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number">5min</span>
+            <span class="stat-label">Setup-Zeit</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number">100%</span>
+            <span class="stat-label">Automatisiert</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number">91€</span>
+            <span class="stat-label">Pro Kurs</span>
+        </div>
+    </div>
+
+    <section>
+        <div class="section-header">
+            <h2>Warum PräventionsHub?</h2>
+            <p>Ihre schlüsselfertige Lösung für digitale Prävention</p>
+        </div>
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <div class="benefit-icon">🎯</div>
+                <h3>Null Aufwand</h3>
+                <p>Sie empfehlen, wir kümmern uns um alles: Plattform, Kurse, Zertifikate, Zahlungen, Support. Vollautomatisch.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">💰</div>
+                <h3>Passives Einkommen</h3>
+                <p>91€ pro abgeschlossenem Kurs. Bei 30 Kursen/Monat sind das 2.730€ zusätzlich – ohne Mehrarbeit.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">⚖️</div>
+                <h3>100% Legal</h3>
+                <p>Sie werden ZPP-zertifizierter Kursleiter (wir helfen). Kein Kickback, keine Grauzone. Sauber nach § 20 SGB V.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">🏥</div>
+                <h3>Ihre Marke</h3>
+                <p>White-Label: Alle Kurse laufen unter Ihrem Namen auf Ihrer Subdomain. Patienten sehen Sie als Anbieter.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">👨‍⚕️</div>
+                <h3>Bessere Patientenbindung</h3>
+                <p>Bieten Sie echten Mehrwert. Ihre Patienten profitieren von Prävention – und bleiben Ihnen treu.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">📈</div>
+                <h3>Skalierbar</h3>
+                <p>32 Kurse in 4 Bereichen. Alle ZPP-zertifiziert. Erweitern Sie jederzeit – ohne Mehrkosten.</p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="section-header">
+            <h2>So funktioniert's</h2>
+            <p>Von der Anmeldung bis zur Auszahlung – in 5 einfachen Schritten</p>
+        </div>
+        <div class="process-timeline">
+            <div class="timeline-item">
+                <div class="timeline-number">1</div>
+                <div class="timeline-content">
+                    <h3>Registrierung & ZPP-Zertifizierung</h3>
+                    <p>Sie buchen die Plattform (99€/Monat). Wir machen eine 2h Online-Einweisung. Sie registrieren sich bei der ZPP als Kursleiter (kostenlos). Fertig in 3 Wochen.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-number">2</div>
+                <div class="timeline-content">
+                    <h3>Ihre White-Label-Seite geht live</h3>
+                    <p>Sie bekommen dr-ihname.praeventionshub.de mit Ihrem Logo & Branding. 32 Kurse sofort verfügbar. Stripe-Konto verbinden (10 Min) – fertig!</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-number">3</div>
+                <div class="timeline-content">
+                    <h3>Sie empfehlen Ihren Patienten</h3>
+                    <p>Patient hat Rückenschmerzen? "Schauen Sie auf meine Präventionsseite – da gibt's einen Kurs für Sie." Das war's. Kein weiterer Aufwand.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-number">4</div>
+                <div class="timeline-content">
+                    <h3>Alles läuft automatisch</h3>
+                    <p>Patient bucht, zahlt 99€. Stripe splittet: 91€ → Ihr Konto, 8€ → Unser Konto. Patient macht Kurs, bekommt automatisch Zertifikat. Reicht bei Kasse ein, bekommt Geld zurück.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-number">5</div>
+                <div class="timeline-content">
+                    <h3>Sie verdienen passiv</h3>
+                    <p>Jeden Monat Dashboard mit Übersicht: Wie viele Kurse, wie viel Umsatz. Geld ist bereits auf Ihrem Konto. Quartalsreport für Steuerberater. Done.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="calculator">
+        <div class="calculator">
+            <h2>💰 Ihr Einnahmen-Potential</h2>
+            <p class="calculator-subtitle">Bewegen Sie den Regler und sehen Sie, was Sie verdienen können</p>
+
+            <div class="calculator-input">
+                <label>Wie viele Kurse empfehlen Sie pro Monat?</label>
+                <div class="slider-container">
+                    <input type="range" id="courseSlider" min="5" max="100" value="30" step="5">
+                    <div class="slider-value"><span id="courseValue">30</span> Kurse</div>
+                    <div class="slider-label">Pro Monat</div>
+                </div>
+            </div>
+
+            <div class="calculator-results">
+                <div class="result-card">
+                    <span class="result-value" id="monthlyIncome">2.730€</span>
+                    <span class="result-label">Monatlich</span>
+                </div>
+                <div class="result-card">
+                    <span class="result-value" id="yearlyIncome">32.760€</span>
+                    <span class="result-label">Jährlich</span>
+                </div>
+                <div class="result-card">
+                    <span class="result-value" id="costs">339€</span>
+                    <span class="result-label">Ihre Kosten/Monat</span>
+                </div>
+                <div class="result-card">
+                    <span class="result-value" id="netIncome">2.391€</span>
+                    <span class="result-label">Netto-Gewinn/Monat</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="section-header">
+            <h2>32 Zertifizierte Kurse</h2>
+            <p>In 4 Handlungsfeldern nach § 20 SGB V – sofort einsatzbereit</p>
+        </div>
+        <div class="course-categories">
+            <div class="category-card">
+                <span class="category-icon-large">🏃</span>
+                <h3>Bewegung</h3>
+                <div class="course-count">8 Kurse</div>
+                <ul class="course-list">
+                    <li>Rückenfit Plus</li>
+                    <li>Ganzkörper-Training</li>
+                    <li>Pilates Basics</li>
+                    <li>Faszientraining</li>
+                    <li>Functional Fitness</li>
+                    <li>Nordic Walking</li>
+                    <li>Beckenboden-Training</li>
+                    <li>Seniorengymnastik</li>
+                </ul>
+            </div>
+            <div class="category-card">
+                <span class="category-icon-large">🥗</span>
+                <h3>Ernährung</h3>
+                <div class="course-count">8 Kurse</div>
+                <ul class="course-list">
+                    <li>Gesund Abnehmen</li>
+                    <li>Ernährung im Alltag</li>
+                    <li>Zuckerreduziert leben</li>
+                    <li>Darmgesundheit</li>
+                    <li>Meal Prep Meisterkurs</li>
+                    <li>Vegetarisch & Vollwertig</li>
+                    <li>Herzgesunde Ernährung</li>
+                    <li>Ernährung 50+</li>
+                </ul>
+            </div>
+            <div class="category-card">
+                <span class="category-icon-large">🧘</span>
+                <h3>Stress & Entspannung</h3>
+                <div class="course-count">8 Kurse</div>
+                <ul class="course-list">
+                    <li>Stressbewältigung</li>
+                    <li>Progressive Muskelentspannung</li>
+                    <li>Autogenes Training</li>
+                    <li>Achtsamkeit & Meditation</li>
+                    <li>Hatha Yoga</li>
+                    <li>Gesunder Schlaf</li>
+                    <li>Resilienz-Training</li>
+                    <li>Work-Life-Balance</li>
+                </ul>
+            </div>
+            <div class="category-card">
+                <span class="category-icon-large">🚭</span>
+                <h3>Suchtprävention</h3>
+                <div class="course-count">8 Kurse</div>
+                <ul class="course-list">
+                    <li>Rauchfrei in 8 Wochen</li>
+                    <li>Nichtraucher bleiben</li>
+                    <li>Alkoholkonsum reduzieren</li>
+                    <li>Suchtprävention Jugendliche</li>
+                    <li>Digital Detox</li>
+                    <li>Spielsucht vorbeugen</li>
+                    <li>Kaufsucht überwinden</li>
+                    <li>Gesunde Lebensführung</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="cta">
+        <div class="cta-section">
+            <div class="cta-content">
+                <h2>Bereit durchzustarten?</h2>
+                <p>Werden Sie Partner und bieten Sie Ihren Patienten echten Mehrwert – während Sie nebenbei verdienen.</p>
+                <button class="btn btn-white" onclick="showContactForm()">
+                    Jetzt kostenlos Demo buchen →
+                </button>
+                <p style="margin-top: 2rem; font-size: 0.9375rem; opacity: 0.8;">
+                    ✓ Keine Vertragsbindung • ✓ 30 Tage Geld-zurück-Garantie • ✓ Persönlicher Support
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="logo" style="justify-content: center; margin-bottom: 2rem;">
+                <div class="logo-icon">💚</div>
+                <span style="color: white;">PräventionsHub</span>
+            </div>
+            <p>Die White-Label-Plattform für digitale Prävention in Arztpraxen</p>
+            <p>© 2026 PräventionsHub GmbH • Alle Kurse ZPP-zertifiziert nach § 20 SGB V</p>
+            <p style="margin-top: 2rem; font-size: 0.875rem;">
+                Impressum • Datenschutz • AGB • Kontakt: info@praeventionshub.de
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // ROI Calculator - FUNKTIONIERT JETZT!
+        const slider = document.getElementById('courseSlider');
+        const courseValue = document.getElementById('courseValue');
+        const monthlyIncome = document.getElementById('monthlyIncome');
+        const yearlyIncome = document.getElementById('yearlyIncome');
+        const costs = document.getElementById('costs');
+        const netIncome = document.getElementById('netIncome');
+
+        function updateCalculator() {
+            const courses = parseInt(slider.value);
+            courseValue.textContent = courses;
+
+            const perCourse = 91;
+            const licenseFee = 99;
+            const transactionFee = 8;
+
+            const grossMonthly = courses * perCourse;
+            const monthlyCosts = licenseFee + (courses * transactionFee);
+            const netMonthly = grossMonthly - monthlyCosts;
+            const yearlyTotal = netMonthly * 12;
+
+            monthlyIncome.textContent = grossMonthly.toLocaleString('de-DE') + '€';
+            yearlyIncome.textContent = yearlyTotal.toLocaleString('de-DE') + '€';
+            costs.textContent = monthlyCosts.toLocaleString('de-DE') + '€';
+            netIncome.textContent = netMonthly.toLocaleString('de-DE') + '€';
+        }
+
+        // WICHTIG: Event Listener
+        slider.addEventListener('input', updateCalculator);
+        slider.addEventListener('change', updateCalculator);
+
+        // Smooth scroll functions
+        function scrollToCTA() {
+            document.getElementById('cta').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function scrollToCalculator() {
+            document.getElementById('calculator').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showContactForm() {
+            alert('Demo-Buchung\n\n✅ In der finalen Version würde hier ein Kontaktformular oder Calendly-Integration erscheinen.\n\n📧 Kontakt: info@praeventionshub.de\n📞 Tel: +49 123 456789\n\n🚀 Buchen Sie Ihre persönliche 30-minütige Demo und wir zeigen Ihnen die Plattform live!');
+        }
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.benefit-card, .timeline-item, .category-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+
+        // Initial calculator update
+        updateCalculator();
+
+        console.log('✅ Calculator initialized and working!');
+    </script>
+</body>
+</html>

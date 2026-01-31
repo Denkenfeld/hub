@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PräventionsHub - Interaktive Geschäftsmodell-Präsentation</title>
+    <style>
+        :root {
+            --color-primary: #2563eb;
+            --color-primary-dark: #1e40af;
+            --color-secondary: #10b981;
+            --color-accent: #f59e0b;
+            --color-bg: #f8fafc;
+            --color-surface: #ffffff;
+            --color-text: #1e293b;
+            --color-text-light: #64748b;
+            --color-border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.15);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-bg: #0f172a;
+                --color-surface: #1e293b;
+                --color-text: #f1f5f9;
+                --color-text-light: #cbd5e1;
+                --color-border: #334155;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+            color: white;
+            border-radius: 16px;
+            margin-bottom: 3rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            opacity: 0.95;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            background: var(--color-surface);
+            padding: 0.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .tab {
+            flex: 1;
+            min-width: 150px;
+            padding: 1rem;
+            border: none;
+            background: transparent;
+            color: var(--color-text);
+            cursor: pointer;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .tab:hover {
+            background: var(--color-bg);
+        }
+
+        .tab.active {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section {
+            background: var(--color-surface);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .section h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--color-primary);
+        }
+
+        .section h3 {
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem 0;
+            color: var(--color-text);
+        }
+
+        .grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        .grid-4 {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        }
+
+        .card {
+            background: var(--color-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 2px solid var(--color-border);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--color-primary);
+        }
+
+        .card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            color: var(--color-primary);
+        }
+
+        .card p {
+            color: var(--color-text-light);
+            font-size: 0.95rem;
+        }
+
+        .card .number {
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            background: var(--color-primary);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 32px;
+            font-weight: bold;
+            margin-bottom: 0.75rem;
+        }
+
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+
+        .flow-box {
+            flex: 1;
+            min-width: 200px;
+            background: var(--color-surface);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 3px solid var(--color-primary);
+            text-align: center;
+            position: relative;
+        }
+
+        .flow-box h4 {
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .flow-arrow {
+            font-size: 2rem;
+            color: var(--color-primary);
+            font-weight: bold;
+        }
+
+        .stakeholder-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stakeholder {
+            background: var(--color-surface);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 5px solid var(--color-primary);
+            box-shadow: var(--shadow);
+        }
+
+        .stakeholder.arzt {
+            border-left-color: #3b82f6;
+        }
+
+        .stakeholder.patient {
+            border-left-color: #10b981;
+        }
+
+        .stakeholder.kasse {
+            border-left-color: #f59e0b;
+        }
+
+        .stakeholder.platform {
+            border-left-color: #8b5cf6;
+        }
+
+        .stakeholder h3 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+
+        .stakeholder ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .stakeholder li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .stakeholder li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--color-secondary);
+            font-weight: bold;
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .course-item {
+            background: var(--color-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--color-secondary);
+            font-size: 0.9rem;
+        }
+
+        .category {
+            margin-bottom: 3rem;
+        }
+
+        .category-header {
+            background: var(--color-primary);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .category-header h3 {
+            margin: 0;
+            color: white;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .pricing-table {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .pricing-card {
+            background: var(--color-surface);
+            border: 2px solid var(--color-border);
+            border-radius: 12px;
+            padding: 2rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .pricing-card.featured {
+            border-color: var(--color-primary);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .pricing-card .plan-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--color-primary);
+        }
+
+        .pricing-card .price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 1rem 0;
+        }
+
+        .pricing-card .price span {
+            font-size: 1rem;
+            color: var(--color-text-light);
+        }
+
+        .pricing-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0;
+        }
+
+        .pricing-card li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+            margin: 2rem 0;
+        }
+
+        .timeline:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--color-primary);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 2rem;
+        }
+
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            left: -2.5rem;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            border: 3px solid var(--color-surface);
+        }
+
+        .timeline-item h4 {
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight {
+            background: var(--color-accent);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .flow-diagram {
+                flex-direction: column;
+            }
+
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>🏥 PräventionsHub</h1>
+            <p>Die All-in-One SaaS-Plattform für zertifizierte Online-Präventionskurse nach § 20 SGB V – Für Arztpraxen, Patienten und Krankenkassen</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('overview')">📊 Übersicht</button>
+            <button class="tab" onclick="switchTab('stakeholders')">👥 Beteiligte</button>
+            <button class="tab" onclick="switchTab('courses')">📚 32 Kurse</button>
+            <button class="tab" onclick="switchTab('revenue')">💰 Geschäftsmodell</button>
+            <button class="tab" onclick="switchTab('process')">⚙️ Prozesse</button>
+            <button class="tab" onclick="switchTab('tech')">🖥️ Technologie</button>
+        </div>
+
+        <!-- ÜBERSICHT -->
+        <div id="overview" class="content active">
+            <div class="section">
+                <h2>Das Geschäftsmodell im Überblick</h2>
+                <p style="font-size: 1.1rem; margin-bottom: 2rem;">PräventionsHub ist eine vollautomatisierte SaaS-Plattform, die Arztpraxen ermöglicht, ihren Patienten ZPP-zertifizierte Online-Präventionskurse anzubieten – komplett passiv, ohne eigene Kursleitung.</p>
+
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-number">32</div>
+                        <div class="stat-label">Zertifizierte Kurse</div>
+                    </div>
+                    <div class="stat-card" style="background: linear-gradient(135deg, #10b981, #059669);">
+                        <div class="stat-number">4</div>
+                        <div class="stat-label">Handlungsfelder</div>
+                    </div>
+                    <div class="stat-card" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Passiv & Automatisiert</div>
+                    </div>
+                    <div class="stat-card" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">
+                        <div class="stat-number">99€</div>
+                        <div class="stat-label">Ø Kurs-Preis</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Wie funktioniert PräventionsHub?</h2>
+                <div class="flow-diagram">
+                    <div class="flow-box">
+                        <h4>1. Arztpraxis</h4>
+                        <p>Registriert sich, absolviert automatisierte Einweisung, empfiehlt Kurse via Muster 36</p>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-box">
+                        <h4>2. Patient</h4>
+                        <p>Erhält Empfehlung, bucht Online-Kurs, absolviert 8 Wochen selbstgesteuert</p>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-box">
+                        <h4>3. Krankenkasse</h4>
+                        <p>Zahlt 80-100% der Kurskosten (bis 150€), Patient reicht Bescheinigung ein</p>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-box">
+                        <h4>4. Revenue Split</h4>
+                        <p>Arzt verdient passiv, PräventionsHub erhält Service-Gebühr</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Warum PräventionsHub?</h2>
+                <div class="grid grid-3">
+                    <div class="card">
+                        <h4>🎯 Für Arztpraxen</h4>
+                        <p>Passives Zusatzeinkommen (1.500-4.500€/Monat), Null Zeitaufwand, gesteigertes Patientenvertrauen durch Präventionsangebot</p>
+                    </div>
+                    <div class="card">
+                        <h4>💚 Für Patienten</h4>
+                        <p>Flexible Online-Kurse von zu Hause, 80-100% Kostenerstattung durch Krankenkasse, professionelle Betreuung</p>
+                    </div>
+                    <div class="card">
+                        <h4>🚀 Für dich</h4>
+                        <p>Skalierbares B2B-SaaS-Modell, wiederkehrende Einnahmen, vollautomatisiert, hohe Margen</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Die 4 Handlungsfelder nach § 20 SGB V</h2>
+                <div class="grid grid-2">
+                    <div class="card">
+                        <span class="number">1</span>
+                        <h4>💪 Bewegung</h4>
+                        <p>Rückentraining, Ganzkörperkraft, Pilates, Faszientraining, Nordic Walking, Functional Training, Gelenkgesundheit, Sturzprävention</p>
+                    </div>
+                    <div class="card">
+                        <span class="number">2</span>
+                        <h4>🥗 Ernährung</h4>
+                        <p>Gesunde Ernährung, Gewichtsmanagement, Ernährung bei Diabetes, Herzgesunde Ernährung, Ernährungsberatung, Meal Prep</p>
+                    </div>
+                    <div class="card">
+                        <span class="number">3</span>
+                        <h4>🧘 Stress & Entspannung</h4>
+                        <p>Progressive Muskelrelaxation, Autogenes Training, Achtsamkeit, Yoga, Resilienz, Schlafhygiene, Burnout-Prävention, Meditation</p>
+                    </div>
+                    <div class="card">
+                        <span class="number">4</span>
+                        <h4>🚭 Suchtbekämpfung</h4>
+                        <p>Raucherentwöhnung, Rauchfrei in 8 Wochen, Nikotinabhängigkeit, Suchtprävention, Alkoholreduktion</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BETEILIGTE -->
+        <div id="stakeholders" class="content">
+            <div class="section">
+                <h2>Alle Beteiligten im Ökosystem</h2>
+                
+                <div class="stakeholder-grid">
+                    <div class="stakeholder arzt">
+                        <h3>👨‍⚕️ Arztpraxen</h3>
+                        <h4>Was sie tun:</h4>
+                        <ul>
+                            <li>Registrieren sich bei PräventionsHub</li>
+                            <li>Absolvieren automatisierte Video-Einweisung (2h)</li>
+                            <li>Lassen sich von ZPP als Kursleiter zertifizieren</li>
+                            <li>Empfehlen Patienten Kurse via Muster 36</li>
+                            <li>Verdienen passiv mit jedem abgeschlossenen Kurs</li>
+                        </ul>
+                        <h4>Was sie bekommen:</h4>
+                        <ul>
+                            <li>1.500-4.500€ Zusatzeinkommen pro Monat</li>
+                            <li>Whitelabel-Plattform mit eigenem Branding</li>
+                            <li>Automatische Verwaltung & Abrechnung</li>
+                            <li>Reputation durch Präventionsangebot</li>
+                        </ul>
+                    </div>
+
+                    <div class="stakeholder patient">
+                        <h3>🧑‍🦱 Patienten</h3>
+                        <h4>Was sie tun:</h4>
+                        <ul>
+                            <li>Erhalten Empfehlung vom Arzt (Muster 36)</li>
+                            <li>Buchen Kurs online auf Arzt-Plattform</li>
+                            <li>Absolvieren 8-Wochen-Kurs selbstgesteuert</li>
+                            <li>Zahlen 99€ (oder weniger) für Kurs</li>
+                            <li>Reichen Teilnahmebescheinigung bei Kasse ein</li>
+                        </ul>
+                        <h4>Was sie bekommen:</h4>
+                        <ul>
+                            <li>80-100% Kostenerstattung durch Krankenkasse</li>
+                            <li>Flexible Online-Kurse von zu Hause</li>
+                            <li>Professionelle PDF-basierte Kursinhalte</li>
+                            <li>ZPP-zertifizierte Qualität</li>
+                            <li>Gesundheitliche Prävention</li>
+                        </ul>
+                    </div>
+
+                    <div class="stakeholder kasse">
+                        <h3>🏛️ Krankenkassen</h3>
+                        <h4>Was sie tun:</h4>
+                        <ul>
+                            <li>Prüfen Teilnahmebescheinigung des Patienten</li>
+                            <li>Erstatten 80-100% der Kurskosten</li>
+                            <li>Fördern präventive Gesundheitsmaßnahmen</li>
+                            <li>Erfüllen gesetzliche Präventionspflicht (§ 20 SGB V)</li>
+                        </ul>
+                        <h4>Was sie bekommen:</h4>
+                        <ul>
+                            <li>Gesündere Versicherte</li>
+                            <li>Reduzierte Langzeitkosten</li>
+                            <li>Erfüllung gesetzlicher Vorgaben</li>
+                            <li>Zufriedene Versicherte</li>
+                        </ul>
+                    </div>
+
+                    <div class="stakeholder platform">
+                        <h3>🖥️ PräventionsHub (Du)</h3>
+                        <h4>Was du bietest:</h4>
+                        <ul>
+                            <li>32 ZPP-zertifizierte Kurskonzepte</li>
+                            <li>Automatisierte Einweisungs-Plattform</li>
+                            <li>Whitelabel-Kursplattform für Ärzte</li>
+                            <li>Automatische Teilnehmerverwaltung</li>
+                            <li>Bescheinigungserstellung & Abrechnung</li>
+                            <li>Support & Updates</li>
+                        </ul>
+                        <h4>Was du verdienst:</h4>
+                        <ul>
+                            <li>Einweisung: 177€ pro Arzt (einmalig)</li>
+                            <li>SaaS-Gebühr: 149-499€/Monat pro Praxis</li>
+                            <li>Transaktionsgebühr: 8€ pro Teilnahmebescheinigung</li>
+                            <li>Skalierbare, wiederkehrende Einnahmen</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Die Zentrale Prüfstelle Prävention (ZPP)</h2>
+                <div class="card">
+                    <h4>🏅 Rolle der ZPP</h4>
+                    <p><strong>Die ZPP zertifiziert:</strong></p>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                        <li>Deine 32 Kurskonzepte (einmalig, kostenlos, 3 Jahre gültig)</li>
+                        <li>Jeden Arzt als Kursleiter (individuell, kostenlos, 10 Werktage)</li>
+                    </ul>
+                    <p style="margin-top: 1rem;"><strong>Qualitätssicherung:</strong> Nur ZPP-zertifizierte Kurse werden von allen gesetzlichen Krankenkassen anerkannt und bezuschusst.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- KURSE -->
+        <div id="courses" class="content">
+            <div class="section">
+                <h2>Alle 32 Präventionskurse im Detail</h2>
+                <p style="margin-bottom: 2rem;">Vollständiges Kurs-Portfolio über alle 4 Handlungsfelder – PDF-basiert, ZPP-zertifizierbar, 8 Wochen Laufzeit</p>
+
+                <div class="category">
+                    <div class="category-header">
+                        <h3>💪 Bewegung</h3>
+                        <span class="badge">8 Kurse</span>
+                    </div>
+                    <div class="course-grid">
+                        <div class="course-item">1. Rückenfit – Gesunder Rücken im Alltag</div>
+                        <div class="course-item">2. Ganzkörperkraft – Functional Training</div>
+                        <div class="course-item">3. Faszientraining – Beweglich bleiben</div>
+                        <div class="course-item">4. Pilates für Einsteiger</div>
+                        <div class="course-item">5. Gelenkgesundheit – Arthrose vorbeugen</div>
+                        <div class="course-item">6. Sturzprävention im Alter</div>
+                        <div class="course-item">7. Nordic Walking Technik</div>
+                        <div class="course-item">8. Bewegung im Büroalltag</div>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <div class="category-header" style="background: #10b981;">
+                        <h3>🥗 Ernährung</h3>
+                        <span class="badge">8 Kurse</span>
+                    </div>
+                    <div class="course-grid">
+                        <div class="course-item" style="border-left-color: #10b981;">1. Gesunde Ernährung Basics</div>
+                        <div class="course-item" style="border-left-color: #10b981;">2. Gewichtsmanagement nachhaltig</div>
+                        <div class="course-item" style="border-left-color: #10b981;">3. Ernährung bei Diabetes Typ 2</div>
+                        <div class="course-item" style="border-left-color: #10b981;">4. Herzgesunde Ernährung</div>
+                        <div class="course-item" style="border-left-color: #10b981;">5. Meal Prep für Berufstätige</div>
+                        <div class="course-item" style="border-left-color: #10b981;">6. Ernährung im Alter</div>
+                        <div class="course-item" style="border-left-color: #10b981;">7. Intuitives Essen lernen</div>
+                        <div class="course-item" style="border-left-color: #10b981;">8. Gesunde Darmflora</div>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <div class="category-header" style="background: #8b5cf6;">
+                        <h3>🧘 Stress & Entspannung</h3>
+                        <span class="badge">8 Kurse</span>
+                    </div>
+                    <div class="course-grid">
+                        <div class="course-item" style="border-left-color: #8b5cf6;">1. Progressive Muskelrelaxation nach Jacobson</div>
+                        <div class="course-item" style="border-left-color: #8b5cf6;">2. Autogenes Training Grundstufe</div>
+                        <div class="course-item" style="border-left-color: #8b5cf6;">3. Achtsamkeitstraining (MBSR)</div>
+                        <div class="course-item" style="border-left-color: #8b5cf6;">4. Yoga für Entspannung</div>
+                        <div class="course-item" style="border-left-color: #8b5cf6;">5. Resilienz stärken</div>
+                        <div class="course-item" style="border-left-color: #8b5cf6;">6. Schlafhygiene & Erholung</div>
+                        <div class="course-item" style="border-left-color: #8b5cf6;">7. Burnout-Prävention</div>
+                        <div class="course-item" style="border-left-color: #8b5cf6;">8. Meditation für Anfänger</div>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <div class="category-header" style="background: #f59e0b;">
+                        <h3>🚭 Suchtbekämpfung</h3>
+                        <span class="badge">8 Kurse</span>
+                    </div>
+                    <div class="course-grid">
+                        <div class="course-item" style="border-left-color: #f59e0b;">1. Rauchfrei in 8 Wochen</div>
+                        <div class="course-item" style="border-left-color: #f59e0b;">2. Nikotinabhängigkeit verstehen</div>
+                        <div class="course-item" style="border-left-color: #f59e0b;">3. Rückfallprävention Rauchen</div>
+                        <div class="course-item" style="border-left-color: #f59e0b;">4. Alkoholkonsum reduzieren</div>
+                        <div class="course-item" style="border-left-color: #f59e0b;">5. Suchtprävention Jugendliche</div>
+                        <div class="course-item" style="border-left-color: #f59e0b;">6. Stressbedingtes Rauchen stoppen</div>
+                        <div class="course-item" style="border-left-color: #f59e0b;">7. E-Zigarette entwöhnen</div>
+                        <div class="course-item" style="border-left-color: #f59e0b;">8. Gesund leben ohne Nikotin</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Kurs-Struktur</h2>
+                <div class="grid grid-2">
+                    <div class="card">
+                        <h4>📄 PDF-basierte Kurse</h4>
+                        <ul style="margin-top: 1rem; padding-left: 1.5rem; color: var(--color-text-light);">
+                            <li>8 Wochen Laufzeit</li>
+                            <li>8 Module à 45-60 Minuten</li>
+                            <li>Wöchentliche Freischaltung</li>
+                            <li>Theorieteil + Praxisübungen</li>
+                            <li>Arbeitsblätter & Tagebücher</li>
+                            <li>Quiz zur Erfolgskontrolle</li>
+                            <li>Automatische Teilnahmebescheinigung</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>✅ ZPP-Zertifizierung</h4>
+                        <ul style="margin-top: 1rem; padding-left: 1.5rem; color: var(--color-text-light);">
+                            <li>Kostenlose Prüfung durch ZPP</li>
+                            <li>3 Jahre Gültigkeit</li>
+                            <li>Bundesweit anerkannt</li>
+                            <li>Alle gesetzlichen Kassen zahlen</li>
+                            <li>IKT-basierte Selbstlernprogramme</li>
+                            <li>Behavioral Change Techniques (BCTs)</li>
+                            <li>Qualitätsgesicherte Inhalte</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- GESCHÄFTSMODELL -->
+        <div id="revenue" class="content">
+            <div class="section">
+                <h2>Revenue-Modell & Pricing</h2>
+                
+                <h3>Pricing für Arztpraxen</h3>
+                <div class="pricing-table">
+                    <div class="pricing-card">
+                        <div class="plan-name">Starter</div>
+                        <div class="price">149€ <span>/ Monat</span></div>
+                        <ul>
+                            <li>✓ Bis 50 aktive Teilnehmer/Monat</li>
+                            <li>✓ Alle 32 Kurse verfügbar</li>
+                            <li>✓ Whitelabel-Plattform</li>
+                            <li>✓ Automatische Bescheinigungen</li>
+                            <li>✓ Support & Updates</li>
+                            <li>✓ ZPP-Einweisung: 177€ (einmalig)</li>
+                        </ul>
+                    </div>
+
+                    <div class="pricing-card featured">
+                        <div class="plan-name">Professional ⭐</div>
+                        <div class="price">299€ <span>/ Monat</span></div>
+                        <ul>
+                            <li>✓ Bis 150 aktive Teilnehmer/Monat</li>
+                            <li>✓ Alle 32 Kurse verfügbar</li>
+                            <li>✓ Whitelabel-Plattform</li>
+                            <li>✓ Automatische Bescheinigungen</li>
+                            <li>✓ Priority Support</li>
+                            <li>✓ Analytics & Reporting</li>
+                            <li>✓ ZPP-Einweisung: 177€ (einmalig)</li>
+                        </ul>
+                    </div>
+
+                    <div class="pricing-card">
+                        <div class="plan-name">Enterprise</div>
+                        <div class="price">549€ <span>/ Monat</span></div>
+                        <ul>
+                            <li>✓ Unbegrenzte Teilnehmer</li>
+                            <li>✓ Alle 32 Kurse verfügbar</li>
+                            <li>✓ Whitelabel-Plattform</li>
+                            <li>✓ Automatische Bescheinigungen</li>
+                            <li>✓ Dedizierter Account Manager</li>
+                            <li>✓ Custom Branding</li>
+                            <li>✓ API-Zugang</li>
+                            <li>✓ ZPP-Einweisung: 177€ (einmalig)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Alternative: Transaktionsbasiertes Modell</h2>
+                <div class="card">
+                    <h4>💳 Hybrid-Pricing</h4>
+                    <p style="margin-bottom: 1rem;">Monatliche Basisgebühr + Service-Fee pro Teilnehmer</p>
+                    <ul style="padding-left: 1.5rem; color: var(--color-text-light);">
+                        <li><strong>Basis:</strong> 99€/Monat (Plattformzugang, alle Kurse)</li>
+                        <li><strong>Plus:</strong> 8€ pro ausgestellter Teilnahmebescheinigung</li>
+                        <li><strong>Begründung:</strong> Verwaltungsaufwand, Zertifikatserstellung, Server-Ressourcen</li>
+                        <li><strong>Beispiel:</strong> 20 Kurse/Monat = 99€ + (20 × 8€) = 259€ Gesamtkosten für Arzt</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Beispielrechnung: Arztpraxis Einnahmen</h2>
+                <div class="grid grid-2">
+                    <div class="card">
+                        <h4>📊 Normale Hausarztpraxis</h4>
+                        <p><strong>20 abgeschlossene Kurse/Monat</strong></p>
+                        <ul style="margin-top: 1rem; padding-left: 1.5rem; color: var(--color-text-light);">
+                            <li>Einnahmen: 20 × 99€ = <span class="highlight">1.980€</span></li>
+                            <li>Kosten (Professional): 299€</li>
+                            <li>Nettogewinn: <span class="highlight">1.681€/Monat</span></li>
+                            <li>Zeitaufwand: 0 Stunden (passiv)</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>📈 Ambitionierte Praxis</h4>
+                        <p><strong>50 abgeschlossene Kurse/Monat</strong></p>
+                        <ul style="margin-top: 1rem; padding-left: 1.5rem; color: var(--color-text-light);">
+                            <li>Einnahmen: 50 × 99€ = <span class="highlight">4.950€</span></li>
+                            <li>Kosten (Enterprise): 549€</li>
+                            <li>Nettogewinn: <span class="highlight">4.401€/Monat</span></li>
+                            <li>Zeitaufwand: 0 Stunden (passiv)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Deine Einnahmen bei Skalierung</h2>
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-number">10</div>
+                        <div class="stat-label">Praxen</div>
+                        <p style="margin-top: 1rem; font-size: 1.5rem; font-weight: 600;">~3.500€/Monat</p>
+                    </div>
+                    <div class="stat-card" style="background: linear-gradient(135deg, #10b981, #059669);">
+                        <div class="stat-number">25</div>
+                        <div class="stat-label">Praxen</div>
+                        <p style="margin-top: 1rem; font-size: 1.5rem; font-weight: 600;">~8.750€/Monat</p>
+                    </div>
+                    <div class="stat-card" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                        <div class="stat-number">50</div>
+                        <div class="stat-label">Praxen</div>
+                        <p style="margin-top: 1rem; font-size: 1.5rem; font-weight: 600;">~17.500€/Monat</p>
+                    </div>
+                    <div class="stat-card" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">
+                        <div class="stat-number">100</div>
+                        <div class="stat-label">Praxen</div>
+                        <p style="margin-top: 1rem; font-size: 1.5rem; font-weight: 600;">~35.000€/Monat</p>
+                    </div>
+                </div>
+                <p style="text-align: center; margin-top: 2rem; color: var(--color-text-light);">Plus einmalige Einweisungsgebühren: 177€ × Anzahl Ärzte</p>
+            </div>
+        </div>
+
+        <!-- PROZESSE -->
+        <div id="process" class="content">
+            <div class="section">
+                <h2>Onboarding-Prozess für Arztpraxen</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4>Tag 1: Registrierung</h4>
+                        <p>Arzt registriert sich auf PräventionsHub, wählt Pricing-Plan, bezahlt Einweisungsgebühr (177€)</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Tag 1-2: Automatisierte Einweisung</h4>
+                        <p>Arzt absolviert aufgezeichnete Video-Einweisungen (2-3h), besteht Abschlusstest, erhält automatisch Einweisungsbescheinigung per E-Mail</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Tag 3-5: ZPP-Registrierung</h4>
+                        <p>Arzt erstellt ZPP-Account (5 Min), lädt Approbation & Einweisungsbescheinigung hoch (30 Min), reicht Unterlagen ein</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Tag 6-15: ZPP-Prüfung (passiv)</h4>
+                        <p>ZPP prüft Qualifikation des Arztes (10 Werktage), Arzt wartet, keine Aktion nötig</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Tag 16: Aktivierung</h4>
+                        <p>Positive Rückmeldung von ZPP, Arzt aktiviert Kurse im PräventionsHub, Whitelabel-Seite geht live</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Tag 17+: Passive Einnahmen</h4>
+                        <p>Arzt empfiehlt Kurse via Muster 36, Patienten buchen automatisch, Arzt verdient passiv</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Patienten-Journey</h2>
+                <div class="grid grid-3">
+                    <div class="card">
+                        <span class="number">1</span>
+                        <h4>Arztbesuch</h4>
+                        <p>Patient kommt mit Rückenschmerzen, Stress oder Übergewicht zum Arzt</p>
+                    </div>
+                    <div class="card">
+                        <span class="number">2</span>
+                        <h4>Empfehlung</h4>
+                        <p>Arzt füllt Muster 36 aus, empfiehlt passenden Online-Kurs von eigener Plattform</p>
+                    </div>
+                    <div class="card">
+                        <span class="number">3</span>
+                        <h4>Buchung</h4>
+                        <p>Patient besucht Arzt-URL, bucht Kurs online, zahlt 99€ per Kreditkarte/PayPal</p>
+                    </div>
+                    <div class="card">
+                        <span class="number">4</span>
+                        <h4>Kursdurchführung</h4>
+                        <p>8 Wochen selbstgesteuertes Lernen, wöchentlich neues Modul, Arbeitsblätter ausfüllen</p>
+                    </div>
+                    <div class="card">
+                        <span class="number">5</span>
+                        <h4>Abschluss</h4>
+                        <p>Nach 100% Abschluss: Automatische Teilnahmebescheinigung per E-Mail</p>
+                    </div>
+                    <div class="card">
+                        <span class="number">6</span>
+                        <h4>Erstattung</h4>
+                        <p>Patient reicht Bescheinigung bei Krankenkasse ein, erhält 80-100% zurück (80-99€)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Deine Aufgaben (einmalig & laufend)</h2>
+                <div class="grid grid-2">
+                    <div class="card">
+                        <h4>🎬 Einmalig: Setup (3-6 Monate)</h4>
+                        <ul style="margin-top: 1rem; padding-left: 1.5rem; color: var(--color-text-light);">
+                            <li>32 PDF-basierte Kurse erstellen (40-60h pro Kurs)</li>
+                            <li>Kurse bei ZPP zertifizieren lassen (kostenlos, 3 Wochen pro Kurs)</li>
+                            <li>Einweisungs-Videos aufzeichnen (2-3h pro Handlungsfeld)</li>
+                            <li>SaaS-Plattform entwickeln (Whitelabel, Buchung, Verwaltung)</li>
+                            <li>Zahlungsabwicklung integrieren (Stripe/PayPal)</li>
+                            <li>Marketing-Website erstellen</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>🔄 Laufend: Betrieb (2-5h/Woche)</h4>
+                        <ul style="margin-top: 1rem; padding-left: 1.5rem; color: var(--color-text-light);">
+                            <li>Support für Ärzte & Patienten (E-Mail, Chat)</li>
+                            <li>Onboarding neuer Arztpraxen</li>
+                            <li>Plattform-Updates & Bugfixes</li>
+                            <li>Marketing & Akquise (SEO, Google Ads, Ärzte-Netzwerke)</li>
+                            <li>Finanz-Reporting & Buchhaltung</li>
+                            <li>Kurs-Updates alle 3 Jahre (Re-Zertifizierung)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TECHNOLOGIE -->
+        <div id="tech" class="content">
+            <div class="section">
+                <h2>Technologie-Stack</h2>
+                <div class="grid grid-3">
+                    <div class="card">
+                        <h4>🎨 Frontend</h4>
+                        <ul style="margin-top: 1rem; padding-left: 1.5rem; color: var(--color-text-light);">
+                            <li>React oder Vue.js</li>
+                            <li>Responsive Design</li>
+                            <li>Whitelabel-fähig</li>
+                            <li>Progressive Web App</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>⚙️ Backend</h4>
+                        <ul style="margin-top: 1rem; padding-left: 1.5rem; color: var(--color-text-light);">
+                            <li>Node.js oder Python</li>
+                            <li>PostgreSQL Datenbank</li>
+                            <li>Supabase (BaaS)</li>
+                            <li>REST API</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>💳 Zahlungen</h4>
+                        <ul style="margin-top: 1rem; padding-left: 1.5rem; color: var(--color-text-light);">
+                            <li>Stripe oder PayPal</li>
+                            <li>Recurring Billing</li>
+                            <li>Rechnungserstellung</li>
+                            <li>SEPA-Lastschrift</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>📧 Kommunikation</h4>
+                        <ul style="margin-top: 1rem; padding-left: 1.5rem; color: var(--color-text-light);">
+                            <li>E-Mail-Automatisierung</li>
+                            <li>Erinnerungen</li>
+                            <li>Bescheinigungen PDF</li>
+                            <li>Support-Chat</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>☁️ Hosting</h4>
+                        <ul style="margin-top: 1rem; padding-left: 1.5rem; color: var(--color-text-light);">
+                            <li>AWS oder Vercel</li>
+                            <li>CDN für PDFs</li>
+                            <li>Backup & Security</li>
+                            <li>DSGVO-konform</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>📊 Analytics</h4>
+                        <ul style="margin-top: 1rem; padding-left: 1.5rem; color: var(--color-text-light);">
+                            <li>Teilnehmer-Tracking</li>
+                            <li>Kurs-Abschlussrate</li>
+                            <li>Revenue-Reporting</li>
+                            <li>Arzt-Dashboards</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Plattform-Features</h2>
+                <div class="grid grid-2">
+                    <div class="card">
+                        <h4>👨‍⚕️ Für Arztpraxen</h4>
+                        <ul style="margin-top: 1rem; padding-left: 1.5rem; color: var(--color-text-light);">
+                            <li>Whitelabel-Subdomain (dr-mueller.praeventionshub.de)</li>
+                            <li>Custom Branding (Logo, Farben)</li>
+                            <li>Teilnehmer-Dashboard</li>
+                            <li>Automatische Bescheinigungs-Erstellung</li>
+                            <li>Revenue-Tracking</li>
+                            <li>Patienten-Export für CRM</li>
+                            <li>Muster-36-Vorlagen</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>🧑‍🦱 Für Patienten</h4>
+                        <ul style="margin-top: 1rem; padding-left: 1.5rem; color: var(--color-text-light);">
+                            <li>Einfache Kurs-Buchung</li>
+                            <li>Wöchentliche Modul-Freischaltung</li>
+                            <li>PDF-Download der Materialien</li>
+                            <li>Fortschritts-Tracking</li>
+                            <li>Quiz & Arbeitsblätter</li>
+                            <li>Automatische Teilnahmebescheinigung</li>
+                            <li>Mobile-optimiert</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Rechtliche & Compliance-Aspekte</h2>
+                <div class="grid grid-3">
+                    <div class="card">
+                        <h4>✅ DSGVO</h4>
+                        <p>Datenschutz-konform, Einwilligungen, Datensparsamkeit, EU-Hosting</p>
+                    </div>
+                    <div class="card">
+                        <h4>🏥 § 20 SGB V</h4>
+                        <p>Alle Kurse nach Leitfaden Prävention, ZPP-zertifiziert, Krankenkassen-anerkannt</p>
+                    </div>
+                    <div class="card">
+                        <h4>⚖️ Anti-Korruption</h4>
+                        <p>Keine Provisions-Zahlungen, nur Service-Gebühren für Software-Nutzung, rechtlich sicher</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Go-to-Market Strategie</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4>Phase 1: MVP (Monate 1-3)</h4>
+                        <p>8 Kern-Kurse erstellen (2 pro Handlungsfeld), ZPP-Zertifizierung beantragen, Basis-Plattform entwickeln, 3-5 Pilot-Praxen gewinnen</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Phase 2: Launch (Monate 4-6)</h4>
+                        <p>32 Kurse komplettieren, Marketing-Website live, Google Ads & SEO starten, 10-20 zahlende Praxen akquirieren</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Phase 3: Skalierung (Monate 7-12)</h4>
+                        <p>Sales-Team aufbauen, Partnerschaften mit Ärzte-Netzwerken, 50-100 Praxen, erste profitable Monate</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Phase 4: Expansion (Jahr 2+)</h4>
+                        <p>Zusatzprodukte (Live-Kurse, Coaching), internationale Expansion (Österreich, Schweiz), 250+ Praxen, Exit oder Weiterführung</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tabName) {
+            // Hide all content
+            document.querySelectorAll('.content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+            
+            // Smooth scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
+
