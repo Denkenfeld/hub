@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. med. Schiller | NextGen Prevention</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* 2026 Health-Tech Palette */
+            --bg-deep: #0f172a;
+            --bg-surface: #ffffff;
+            --bg-soft: #f8fafc;
+            
+            --primary: #3b82f6; /* Electric Blue */
+            --primary-dark: #1d4ed8;
+            --accent: #8b5cf6; /* Digital Lavender */
+            
+            --success: #10b981; /* Emerald */
+            --success-glow: rgba(16, 185, 129, 0.4);
+            
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            
+            --glass: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.8);
+            
+            --radius-xl: 32px;
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            
+            --shadow-float: 0 20px 40px -10px rgba(0,0,0,0.1);
+            --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.15);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; outline: none; -webkit-font-smoothing: antialiased; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-soft);
+            color: var(--text-main);
+            overflow-x: hidden;
+            /* Subtle Animated Mesh Gradient Background */
+            background-image: 
+                radial-gradient(circle at 10% 10%, rgba(59, 130, 246, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 90%, rgba(139, 92, 246, 0.08) 0%, transparent 40%);
+            background-attachment: fixed;
+        }
+
+        h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; }
+
+        /* --- UI Components --- */
+        .container { max-width: 1320px; margin: 0 auto; padding: 0 2rem; }
+        
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+            padding: 1rem 2rem; border-radius: 100px; font-weight: 700; 
+            cursor: pointer; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: none; font-size: 1rem; position: relative; overflow: hidden;
+        }
+        
+        .btn-primary {
+            background: var(--text-main); color: white;
+            box-shadow: 0 4px 15px rgba(30, 41, 59, 0.3);
+        }
+        .btn-primary:hover { transform: scale(1.05); box-shadow: 0 8px 25px rgba(30, 41, 59, 0.4); }
+        
+        .btn-glow {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            box-shadow: 0 0 20px var(--success-glow);
+        }
+        .btn-glow:hover { box-shadow: 0 0 40px var(--success-glow); transform: translateY(-2px); }
+
+        /* --- Floating Header --- */
+        nav {
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+            width: calc(100% - 40px); max-width: 1320px;
+            background: rgba(255,255,255,0.85); backdrop-filter: blur(16px);
+            padding: 0.8rem 1.5rem; border-radius: 100px;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000; border: 1px solid white;
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.05);
+        }
+
+        .logo { font-weight: 800; font-size: 1.2rem; display: flex; align-items: center; gap: 0.5rem; }
+        .logo-circle { width: 40px; height: 40px; background: var(--text-main); color: white; border-radius: 50%; display: grid; place-items: center; font-family: 'Outfit'; }
+
+        /* --- Hero Section 2026 --- */
+        .hero { padding-top: 180px; padding-bottom: 100px; position: relative; }
+        
+        .hero-layout {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+        }
+
+        .hero h1 {
+            font-size: 4rem; line-height: 1.05; font-weight: 800; margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--text-main) 0%, #475569 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            letter-spacing: -0.03em;
+        }
+
+        .trust-pill {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: white; padding: 6px 16px 6px 6px;
+            border-radius: 100px; border: 1px solid var(--success);
+            color: var(--success); font-weight: 700; font-size: 0.9rem;
+            margin-bottom: 2rem; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.1);
+        }
+        .trust-pill span { width: 24px; height: 24px; background: var(--success); color: white; border-radius: 50%; display: grid; place-items: center; font-size: 12px; }
+
+        /* The Visual Guarantee "Card" */
+        .visual-card {
+            background: white; border-radius: var(--radius-xl);
+            padding: 40px; position: relative;
+            box-shadow: var(--shadow-float);
+            border: 1px solid white;
+        }
+        
+        .visual-card::before {
+            content: ''; position: absolute; inset: -2px; border-radius: 34px;
+            background: linear-gradient(45deg, var(--success), transparent, var(--primary));
+            z-index: -1; opacity: 0.3;
+        }
+
+        .math-equation {
+            display: flex; justify-content: space-between; align-items: center;
+            margin: 2rem 0; padding: 1.5rem; background: var(--bg-soft);
+            border-radius: var(--radius-md); font-family: 'Outfit';
+        }
+        .math-block { text-align: center; }
+        .math-label { font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted); font-weight: 600; margin-bottom: 0.5rem; }
+        .math-val { font-size: 2rem; font-weight: 800; color: var(--text-main); }
+        .math-val.strike { text-decoration: line-through; color: #ef4444; opacity: 0.5; font-size: 1.5rem; }
+        .math-val.free { color: var(--success); font-size: 2.5rem; text-shadow: 0 0 20px var(--success-glow); }
+        
+        .symbol { font-size: 1.5rem; color: var(--text-muted); }
+
+        /* --- Course Filter & Grid --- */
+        .filter-dock {
+            display: flex; justify-content: center; gap: 1rem; margin-bottom: 3rem;
+            background: white; padding: 0.5rem; border-radius: 20px;
+            width: fit-content; margin-left: auto; margin-right: auto;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            position: sticky; top: 100px; z-index: 90;
+        }
+
+        .filter-btn {
+            background: transparent; border: none; padding: 0.8rem 2rem;
+            border-radius: 16px; font-weight: 600; color: var(--text-muted);
+            cursor: pointer; transition: all 0.2s; font-size: 1rem;
+        }
+        .filter-btn.active {
+            background: var(--text-main); color: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .grid-container {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px; padding-bottom: 6rem;
+        }
+
+        /* --- THE 2026 CARD --- */
+        .course-card {
+            background: white; border-radius: var(--radius-lg); overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.5);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative; display: flex; flex-direction: column;
+            height: 100%;
+        }
+
+        .course-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15);
+            z-index: 2;
+        }
+
+        .card-img-container {
+            height: 200px; position: relative; overflow: hidden;
+        }
+        
+        .card-img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        .course-card:hover .card-img { transform: scale(1.1); }
+
+        /* The Guarantee Badge on Image */
+        .card-badge {
+            position: absolute; top: 12px; left: 12px;
+            background: rgba(255,255,255,0.9); backdrop-filter: blur(8px);
+            padding: 6px 12px; border-radius: 12px;
+            font-size: 0.8rem; font-weight: 700; color: var(--success);
+            display: flex; align-items: center; gap: 4px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .card-content { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; }
+        
+        .card-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; line-height: 1.3; }
+        .card-desc { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem; flex-grow: 1; }
+        
+        .card-meta {
+            display: flex; gap: 1rem; margin-bottom: 1.5rem;
+            font-size: 0.85rem; color: var(--text-main); font-weight: 500;
+            background: var(--bg-soft); padding: 0.8rem; border-radius: 12px;
+        }
+
+        /* Interactive Footer of Card */
+        .card-action {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--bg-soft);
+        }
+        
+        .price-block { display: flex; flex-direction: column; }
+        .price-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; }
+        .price-zero { font-size: 1.4rem; font-weight: 800; color: var(--success); }
+
+        .btn-icon {
+            width: 44px; height: 44px; border-radius: 50%;
+            background: var(--text-main); color: white; border: none;
+            display: grid; place-items: center; cursor: pointer;
+            transition: all 0.3s;
+        }
+        .course-card:hover .btn-icon { background: var(--primary); transform: rotate(-45deg); }
+
+        /* --- Footer --- */
+        footer { background: white; padding: 4rem 0; text-align: center; border-top: 1px solid var(--border); }
+        
+        @media(max-width: 900px) {
+            .hero-layout { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 3rem; }
+            .filter-dock { overflow-x: auto; justify-content: flex-start; width: 100%; border-radius: 0; padding: 1rem; top: 80px; }
+            .filter-btn { white-space: nowrap; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">
+            <div class="logo-circle">DS</div>
+            Dr. med. Schiller
+        </div>
+        <button class="btn btn-primary" style="padding: 0.6rem 1.2rem; font-size: 0.9rem;" onclick="alert('Login...')">Patienten Login</button>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-layout">
+                <div>
+                    <div class="trust-pill">
+                        <span>✓</span> Offiziell zugelassene Kassenleistung
+                    </div>
+                    <h1>Gesundheit,<br>die Sie nichts kostet.</h1>
+                    <p style="font-size: 1.25rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 2.5rem;">
+                        Wählen Sie aus 32 zertifizierten Online-Kursen. Ihre Krankenkasse übernimmt die Kosten. Und falls nicht? <strong>Dann erstatten wir.</strong>
+                    </p>
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <button class="btn btn-glow" onclick="document.getElementById('courses').scrollIntoView({behavior: 'smooth'})">
+                            Kurse wählen ↓
+                        </button>
+                        <button class="btn" style="background: white; color: var(--text-main); border: 1px solid #e2e8f0;" onclick="alert('Video Modal')">
+                            ▶ So funktioniert's
+                        </button>
+                    </div>
+                </div>
+
+                <div class="visual-card">
+                    <div style="text-align: center; margin-bottom: 1.5rem;">
+                        <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Unsere Sicherheits-Garantie</h3>
+                        <p style="color: var(--text-muted);">Sie zahlen am Ende garantiert 0€.</p>
+                    </div>
+
+                    <div class="math-equation">
+                        <div class="math-block">
+                            <div class="math-label">Kursgebühr</div>
+                            <div class="math-val">99€</div>
+                        </div>
+                        <div class="symbol">-</div>
+                        <div class="math-block">
+                            <div class="math-label">Erstattung</div>
+                            <div class="math-val strike">99€</div>
+                        </div>
+                        <div class="symbol">=</div>
+                        <div class="math-block">
+                            <div class="math-label">Ihr Kosten</div>
+                            <div class="math-val free">0€</div>
+                        </div>
+                    </div>
+
+                    <div style="background: #ecfdf5; padding: 1rem; border-radius: 12px; display: flex; gap: 12px; align-items: flex-start;">
+                        <div style="font-size: 1.5rem;">🛡️</div>
+                        <div>
+                            <strong style="color: #065f46; font-size: 0.95rem;">Doppelter Boden:</strong>
+                            <p style="font-size: 0.85rem; color: #047857; margin-top: 4px;">
+                                Sollte Ihre gesetzliche Kasse wider Erwarten die Kosten nicht übernehmen, erstatten wir Ihnen 100% der Kursgebühr zurück. Ohne Wenn und Aber.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="courses" style="padding-top: 2rem;">
+        <div class="container">
+            <div class="filter-dock">
+                <button class="filter-btn active" onclick="filterCourses('bewegung')">🏃 Bewegung</button>
+                <button class="filter-btn" onclick="filterCourses('ernaehrung')">🥗 Ernährung</button>
+                <button class="filter-btn" onclick="filterCourses('stress')">🧘 Stress & Schlaf</button>
+                <button class="filter-btn" onclick="filterCourses('sucht')">🚭 Suchtfrei</button>
+            </div>
+
+            <div class="grid-container" id="grid">
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+                <div class="logo" style="font-size: 1.5rem;">
+                    <div class="logo-circle">DS</div>
+                    Dr. med. Schiller
+                </div>
+                <p style="color: var(--text-muted);">
+                    Zertifizierte Prävention nach § 20 SGB V.<br>
+                    Ärztliche Leitung: Dr. med. Thomas Schiller
+                </p>
+                <div style="margin-top: 2rem; display: flex; gap: 2rem; font-size: 0.9rem;">
+                    <a href="#" style="color: var(--text-main); text-decoration: none;">Impressum</a>
+                    <a href="#" style="color: var(--text-main); text-decoration: none;">Datenschutz</a>
+                    <a href="#" style="color: var(--text-main); text-decoration: none;">AGB</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // High Quality Images - FIXED Unsplash URLs
+        const courses = {
+            bewegung: [
+                { title: "Rückenfit Pro", desc: "Nachhaltige Stärkung der Rückenmuskulatur für Vielsitzer.", img: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800" },
+                { title: "Ganzkörper Kraft", desc: "Funktionelles Training für mehr Stabilität.", img: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800" },
+                { title: "Nordic Walking", desc: "Gelenkschonendes Ausdauertraining Outdoor.", img: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800" },
+                { title: "Faszien Yoga", desc: "Verklebungen lösen, Beweglichkeit steigern.", img: "https://images.unsplash.com/photo-1575052814086-f385e2e2ad1b?w=800" },
+                { title: "Beckenboden", desc: "Stärkung der Körpermitte und Haltung.", img: "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800" },
+                { title: "Lauf-Einstieg", desc: "Von 0 auf 5km in 8 Wochen. Sanft und sicher.", img: "https://images.unsplash.com/photo-1486218119243-13883505764c?w=800" },
+                { title: "Mobility Flow", desc: "Tägliche Beweglichkeitsroutine für Senioren.", img: "https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=800" },
+                { title: "Starker Nacken", desc: "Gegen Verspannungen durch Bildschirmarbeit.", img: "https://images.unsplash.com/photo-1600618528240-fb9fc964b853?w=800" }
+            ],
+            ernaehrung: [
+                { title: "Gesund Abnehmen", desc: "Wohlfühlgewicht ohne Diätwahn erreichen.", img: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=800" },
+                { title: "Zuckerfrei Leben", desc: "Raus aus der Zuckerfalle, rein in die Energie.", img: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800" },
+                { title: "Darmgesundheit", desc: "Das Mikrobiom stärken für starke Abwehr.", img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800" },
+                { title: "Herzgesund Essen", desc: "Mediterrane Kost für Blutdruck & Gefäße.", img: "https://images.unsplash.com/photo-1505576399279-565b52d4ac71?w=800" },
+                { title: "Intervallfasten", desc: "Stoffwechsel-Reset leicht gemacht.", img: "https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=800" },
+                { title: "Vegan für Einsteiger", desc: "Pflanzliche Ernährung ohne Mangelerscheinung.", img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800" },
+                { title: "Essen im Job", desc: "Gesunde Meal-Prep Strategien für Eilige.", img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800" },
+                { title: "Anti-Entzündlich", desc: "Ernährung bei Rheuma und Schmerzen.", img: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=800" }
+            ],
+            stress: [
+                { title: "MBSR Achtsamkeit", desc: "Stressbewältigung durch Achtsamkeit.", img: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800" },
+                { title: "Hatha Yoga", desc: "Sanftes Yoga für Körper und Geist.", img: "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?w=800" },
+                { title: "Gesunder Schlaf", desc: "Schlafstörungen natürlich überwinden.", img: "https://images.unsplash.com/photo-1520206183501-b80df61043c2?w=800" },
+                { title: "Progressive Muskelent.", desc: "Tiefenentspannung nach Jacobson.", img: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800" },
+                { title: "Resilienz Training", desc: "Psychische Widerstandskraft stärken.", img: "https://images.unsplash.com/photo-1434682881908-b43d0467b798?w=800" },
+                { title: "Qigong Basics", desc: "Chinesische Bewegungsmeditation.", img: "https://images.unsplash.com/photo-1517931524326-bdd55a541177?w=800" },
+                { title: "Burnout Prophylaxe", desc: "Warnsignale erkennen und gegensteuern.", img: "https://images.unsplash.com/photo-1456406644174-8ddd4cd52a06?w=800" },
+                { title: "Autogenes Training", desc: "Selbstentspannung durch Formel-Sätze.", img: "https://images.unsplash.com/photo-1528715471579-d1bcf0ba5e83?w=800" }
+            ],
+            sucht: [
+                { title: "Rauchfrei in 8 Wochen", desc: "Der wissenschaftliche Ausstieg.", img: "https://images.unsplash.com/photo-1527613426441-4da17471b66d?w=800" },
+                { title: "Alkohol reduzieren", desc: "Selbstbestimmter Umgang mit Alkohol.", img: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=800" },
+                { title: "Digital Detox", desc: "Weniger Smartphone, mehr echtes Leben.", img: "https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=800" },
+                { title: "Stress-Essen Stoppen", desc: "Emotionales Essen verstehen und beenden.", img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800" },
+                { title: "Spielsucht Hilfe", desc: "Erste Schritte aus der Abhängigkeit.", img: "https://images.unsplash.com/photo-1551033406-611cf9a28f67?w=800" },
+                { title: "Nichtraucher (Pro)", desc: "Rückfallprophylaxe für Ex-Raucher.", img: "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?w=800" },
+                { title: "Medienkompetenz", desc: "Für Eltern: Kinder gesund begleiten.", img: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800" },
+                { title: "Dry January", desc: "Einen Monat alkoholfrei – der Kurs.", img: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=800" }
+            ]
+        };
+
+        const grid = document.getElementById('grid');
+        const btns = document.querySelectorAll('.filter-btn');
+
+        function filterCourses(category) {
+            // Update Active State
+            btns.forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Clear Grid with Fade Out
+            grid.style.opacity = '0';
+            grid.style.transform = 'translateY(10px)';
+
+            setTimeout(() => {
+                grid.innerHTML = courses[category].map(item => `
+                    <div class="course-card">
+                        <div class="card-img-container">
+                            <img src="${item.img}" class="card-img" alt="${item.title}">
+                            <div class="card-badge">🛡️ 0€ Risiko</div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">${item.title}</h3>
+                            <p class="card-desc">${item.desc}</p>
+                            
+                            <div class="card-meta">
+                                <span>⚡ 8-10 Wochen</span>
+                                <span>📱 Online</span>
+                            </div>
+
+                            <div class="card-action">
+                                <div class="price-block">
+                                    <span class="price-label">Effektiv</span>
+                                    <span class="price-zero">0,00€</span>
+                                </div>
+                                <button class="btn-icon" onclick="openBooking('${item.title}')">
+                                    ➝
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                // Fade In
+                grid.style.opacity = '1';
+                grid.style.transform = 'translateY(0)';
+            }, 300);
+        }
+
+        function openBooking(title) {
+            alert(`🚀 Buchungsprozess für "${title}" startet...\n\nHinweis: Sie zahlen erst, wenn wir Ihre Kasse geprüft haben (Simulierte Aktion).`);
+        }
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            filterCourses('bewegung');
+        });
+
+    </script>
+</body>
+</html>
