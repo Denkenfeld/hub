@@ -161,6 +161,7 @@
         .grid-container {
             display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 24px; padding-bottom: 6rem;
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
 
         /* --- THE 2026 CARD --- */
@@ -309,10 +310,10 @@
     <section id="courses" style="padding-top: 2rem;">
         <div class="container">
             <div class="filter-dock">
-                <button class="filter-btn active" onclick="filterCourses('bewegung')">🏃 Bewegung</button>
-                <button class="filter-btn" onclick="filterCourses('ernaehrung')">🥗 Ernährung</button>
-                <button class="filter-btn" onclick="filterCourses('stress')">🧘 Stress & Schlaf</button>
-                <button class="filter-btn" onclick="filterCourses('sucht')">🚭 Suchtfrei</button>
+                <button class="filter-btn active" data-category="bewegung" onclick="filterCourses('bewegung')">🏃 Bewegung</button>
+                <button class="filter-btn" data-category="ernaehrung" onclick="filterCourses('ernaehrung')">🥗 Ernährung</button>
+                <button class="filter-btn" data-category="stress" onclick="filterCourses('stress')">🧘 Stress & Schlaf</button>
+                <button class="filter-btn" data-category="sucht" onclick="filterCourses('sucht')">🚭 Suchtfrei</button>
             </div>
 
             <div class="grid-container" id="grid">
@@ -389,9 +390,13 @@
         const btns = document.querySelectorAll('.filter-btn');
 
         function filterCourses(category) {
-            // Update Active State
-            btns.forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
+            // Update Active State - find the correct button by data-category
+            btns.forEach(b => {
+                b.classList.remove('active');
+                if (b.getAttribute('data-category') === category) {
+                    b.classList.add('active');
+                }
+            });
 
             // Clear Grid with Fade Out
             grid.style.opacity = '0';
@@ -436,11 +441,14 @@
             alert(`🚀 Buchungsprozess für "${title}" startet...\n\nHinweis: Sie zahlen erst, wenn wir Ihre Kasse geprüft haben (Simulierte Aktion).`);
         }
 
-        // Init
+        // Init - Load Bewegung courses on page load
         document.addEventListener('DOMContentLoaded', () => {
             filterCourses('bewegung');
         });
 
     </script>
+<a href="https://denkenfeld.github.io/hub/hub.html">hub</a>
+<a href="https://denkenfeld.github.io/hub/pitch.html">pitch</a>
+
 </body>
 </html>
